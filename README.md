@@ -12,18 +12,53 @@ Zoom (S2S OAuth) --> prepare: transcript + attendees -> contact -> company -> la
         high/medium match: note/meeting + tasks on the deal      low match: HubSpot review task for the rep
 ```
 
-## What changed vs. the original repo
-| Original | Now |
-|---|---|
-| One Hermes profile + cron per rep | One pipeline; reps are rows in `settings.yaml` (opt-in allowlist) |
-| Per-user HubSpot "private app tokens" (not actually per-user) | One HubSpot private app token, env var; attribution via HubSpot owner |
-| Emails parsed from the transcript | Emails from Zoom's participants API; internal domains filtered out |
-| LLM did matching | Deterministic matching in code; **latest-updated deal** rule |
-| Self-reported confidence | Every item needs a verbatim quote that is machine-checked against the transcript |
-| Local `pending/` + `.review` files | HubSpot review task assigned to the rep |
-| Agent had write tools | Agent only writes `extraction.json`; code does writes via an allowlist (notes, meetings, tasks) |
-| Hourly poll, `.processed` markers | Poll (+ optional webhook); idempotent via `pcix-ref` marker in HubSpot |
-| Unbounded notes | **5-sentence cap** enforced in code |
+## What this skill enables
+
+After a rep finishes a recorded Zoom call, this skill finds the right HubSpot opportunity, adds a short summary of what happened (five sentences at most) as a HubSpot meeting on that deal, and creates tasks for the rep's own follow-ups. The rep does nothing. If the skill is not sure which deal the call belongs to, it writes nothing to a deal and instead asks the rep with a single HubSpot task. The whole cycle runs every 15 minutes via cron (or optionally via a Zoom webhook). The AI is involved only for extraction.
+
+### Workflow
+
+1. **Find** (code) — lists recent recordings for each opted-in rep, keeps those with a transcript of at least 150 words, and gets attendee emails from Zoom's participants data (not from the transcript text).
+2. **Match** (code) — drops your own company's attendees, looks up the external attendee in HubSpot, finds their company, then lists that company's deals. If there is more than one deal, the most recently updated one is used (closed deals included).
+3. **Extract** (agent) — reads the transcript and writes one file: up to 5 note sentences, objections, timeline signals, next steps, contact roles and sentiment. Every item needs a word-for-word quote and a confidence level.
+4. **Verify** (code) — checks each quote against the real transcript. Drops anything not found, anything low-confidence, and anything containing links or HTML. Trims the note to 5 sentences.
+5. **Write** (code) — high or medium match: creates the HubSpot meeting on the deal plus tasks for your team's next steps. Low match: creates a review task for the rep instead. Deletes the transcript text immediately.
+
+### Matching confidence
+
+|| Confidence | When | Result |
+||---|---|---|
+|| **High** | An external attendee's email matches a HubSpot contact, with a single company and an eligible deal | Written to the deal automatically |
+|| **Medium** | Match by email domain only, a contact with no company, or several companies with a clear majority | Written to the deal; footer flags the match level |
+|| **Low** | A tie between companies, a topic-only guess, no eligible deal, or no external attendee emails | Nothing written to a deal. Review task created for the rep |
+
+Internal-only meetings and very short transcripts are skipped silently.
+
+### What lands in HubSpot
+
+A HubSpot meeting (or note) on the right deal, up to 3 tasks, and a rep-ready summary of what was and was not written. The default object is a **meeting**; a note is one setting away (`write_as: note`). Each entry carries a `pcix-ref:<Zoom meeting id>` footer that is metadata, not prose. Tasks are created only for your team's commitments (not the customer's), assigned to the host rep, associated to the deal, with a short title and one-line body.
+
+#### The review task (when the match is uncertain)
+
+The rep gets a task titled `[Call Intel Review] ...` showing the suggested deal and the proposed note. Three options:
+
+- **Approve** — mark the task complete. The next cycle writes the meeting to the suggested deal.
+- **Redirect** — edit the `DEAL_ID:` line to the correct deal, then complete the task.
+- **Dismiss** — put `DISMISS` on its own line, then complete (or delete) the task.
+
+Tasks expire after 14 days.
+
+### Safety and quality guarantees
+
+|| Guarantee | How it is enforced |
+||---|---|
+|| Right record, or no record | Low-confidence matches never write. They go to a review task. |
+|| Nothing invented | Every written claim carries a verbatim quote that code verifies against the transcript. Unverifiable items are dropped and listed as withheld. |
+|| Deal properties are untouchable | The code can only create meetings, notes and tasks. No function exists to change stage, amount or any record property, even if someone on the call tries to instruct the AI. |
+|| Spoken instructions are ignored | The transcript is fenced as untrusted data, and the AI step has no HubSpot or Zoom tools. Links and HTML are rejected. |
+|| Five sentences, always | A sentence counter in code trims the body (strict: when unsure it counts more sentences, not fewer). |
+|| No duplicates | Each entry carries a marker checked in HubSpot before writing, so retries, restarts and lost local state never double-post. |
+|| Only opted-in reps | The Zoom credential is account-wide, so a default-deny rep list limits which recordings are ever read. |
 
 ## Setup
 
