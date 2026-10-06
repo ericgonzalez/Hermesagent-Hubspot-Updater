@@ -1,4 +1,4 @@
-# Post-Call CRM Update Agent Skill
+# Post-Call CRM Update Agent Skill (Hermes Agent)
 
 Zoom call transcripts -> verified, short HubSpot deal notes + tasks. One shared pipeline for all reps
 (no agent or profile per rep). Zoom and HubSpot only.
