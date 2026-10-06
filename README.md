@@ -3,14 +3,7 @@
 Zoom call transcripts -> verified, short HubSpot deal notes + tasks. One shared pipeline for all reps
 (no agent or profile per rep). Zoom and HubSpot only.
 
-```
-Zoom (S2S OAuth) --> prepare: transcript + attendees -> contact -> company -> latest-updated deal
-                         |
-                         v   (agent: extraction only, no CRM tools)
-                     extraction.json --> commit: verify quotes, cap 5 sentences, allowlisted writes
-                         |
-        high/medium match: note/meeting + tasks on the deal      low match: HubSpot review task for the rep
-```
+![Post-Call Intel Pipeline](docs/post-call-hubspot-flow.png)
 
 ## What this skill enables
 
