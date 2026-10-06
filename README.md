@@ -1,13 +1,10 @@
 # Post-Call CRM Update Agent Skill (Hermes Agent)
 
-Zoom call transcripts -> verified, short HubSpot deal notes + tasks. One shared pipeline for all reps
-(no agent or profile per rep). Zoom and HubSpot only.
-
-![Post-Call Intel Pipeline](docs/post-call-hubspot-flow.png)
-
-## What this skill enables
+Agent skill which enabled agents to read zoom call transcripts, then updates Hubspot CRM to provide deal updates.
 
 After a rep finishes a recorded Zoom call, this skill finds the right HubSpot opportunity, adds a short summary of what happened (five sentences at most) as a HubSpot meeting on that deal, and creates tasks for the rep's own follow-ups. The rep does nothing. If the skill is not sure which deal the call belongs to, it writes nothing to a deal and instead asks the rep with a single HubSpot task. The whole cycle runs every 15 minutes via cron (or optionally via a Zoom webhook). The AI is involved only for extraction.
+
+![Post-Call Intel Pipeline](docs/post-call-hubspot-flow.png)
 
 ### Workflow
 
