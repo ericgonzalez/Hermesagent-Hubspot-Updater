@@ -1,0 +1,31 @@
+{
+  "skills": [
+    {
+      "name": "post-call-hubspot",
+      "description": "Turn Zoom call transcripts into short, verified HubSpot deal notes (max 5 sentences) and tasks, automatically and with no rep effort. Use this skill whenever a scheduled run, Zoom recording event, or user asks to process new Zoom calls, update HubSpot after sales calls, log call notes to the opportunity, check the post-call review queue, or set up/diagnose the Zoom-to-HubSpot post-call pipeline.",
+      "files": [
+        "SKILL.md",
+        "prompts/extract.md",
+        "scripts/pcix.py",
+        "scripts/pcix_lib/__init__.py",
+        "scripts/pcix_lib/compose.py",
+        "scripts/pcix_lib/config.py",
+        "scripts/pcix_lib/hubspot.py",
+        "scripts/pcix_lib/matching.py",
+        "scripts/pcix_lib/net.py",
+        "scripts/pcix_lib/pipeline.py",
+        "scripts/pcix_lib/state.py",
+        "scripts/pcix_lib/transcript.py",
+        "scripts/pcix_lib/validate.py",
+        "scripts/pcix_lib/webhook.py",
+        "scripts/pcix_lib/zoom.py",
+        "config/settings.example.yaml",
+        "requirements.txt",
+        "PRD.md",
+        "tests/fakes.py",
+        "tests/test_pipeline.py",
+        "tests/test_units.py"
+      ]
+    }
+  ]
+}

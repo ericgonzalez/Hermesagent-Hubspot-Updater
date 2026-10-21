@@ -1,0 +1,17 @@
+{
+  "note_sentences": [
+    {"text": "Initech is still interested in the reporting module and its weekly dashboards for regional managers.", "quote": "we are still interested in the reporting module", "confidence": "high"},
+    {"text": "Tom said rollout is probably in the first quarter but still needs to confirm.", "quote": "probably the first quarter, but I would have to confirm that", "confidence": "medium"},
+    {"text": "Alex will send the dashboard overview deck and set up a call next week.", "quote": "Let me send you the dashboard overview deck", "confidence": "high"},
+    {"text": "The finance team may want a separate demo.", "quote": "Maybe the finance team will want a separate demo, I am not sure", "confidence": "low"}
+  ],
+  "objections": [],
+  "timeline_signals": [
+    {"text": "Possible rollout in the first quarter, unconfirmed.", "quote": "probably the first quarter, but I would have to confirm that", "confidence": "medium"}
+  ],
+  "next_steps": [
+    {"text": "Send the dashboard overview deck to Initech", "owner_side": "us", "owner_name": "Alex Rep", "due": null, "quote": "Let me send you the dashboard overview deck", "confidence": "high"}
+  ],
+  "contact_roles": [],
+  "sentiment": {"value": "positive", "quote": "we are still interested in the reporting module", "confidence": "medium"}
+}

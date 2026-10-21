@@ -2,6 +2,9 @@
 name: post-call-hubspot
 description: Turn Zoom call transcripts into short, verified HubSpot deal notes (max 5 sentences) and tasks, automatically and with no rep effort. Use this skill whenever a scheduled run, Zoom recording event, or user asks to process new Zoom calls, update HubSpot after sales calls, log call notes to the opportunity, check the post-call review queue, or set up/diagnose the Zoom-to-HubSpot post-call pipeline.
 version: 1.0.0
+author: Eric Gonzalez
+license: MIT
+platforms: [linux, macos]
 metadata:
   hermes:
     tags: [sales, zoom, hubspot, crm, transcripts]

@@ -1,0 +1,23 @@
+{
+  "note_sentences": [
+    {"text": "Globex has not reviewed the proposal and the deal looks stalled.", "quote": "we have not had time to look at the proposal properly", "confidence": "high"},
+    {"text": "Elena said budget is frozen until January so nothing can be approved this quarter.", "quote": "Budget is frozen until January, so I cannot approve anything this quarter", "confidence": "high"},
+    {"text": "Marcus is also talking to a cheaper competing vendor.", "quote": "We are also talking to another vendor who is cheaper than you", "confidence": "high"},
+    {"text": "Marcus will think it over and check with his team before deciding whether to continue.", "quote": "Let me think about it and check with my team", "confidence": "high"},
+    {"text": "Sam will send a one page ROI summary tomorrow morning.", "quote": "I will send the one page summary tomorrow morning", "confidence": "high"}
+  ],
+  "objections": [
+    {"text": "Budget frozen until January.", "speaker": "Elena Ruiz", "quote": "Budget is frozen until January", "confidence": "high"},
+    {"text": "Considering a cheaper competing vendor.", "speaker": "Marcus Webb", "quote": "We are also talking to another vendor who is cheaper than you", "confidence": "high"}
+  ],
+  "timeline_signals": [
+    {"text": "Marcus wants time to think and check with his team.", "quote": "Let me think about it and check with my team", "confidence": "high"}
+  ],
+  "next_steps": [
+    {"text": "Send Globex a one page ROI summary", "owner_side": "us", "owner_name": "Sam Rep", "due": null, "quote": "I will send the one page summary tomorrow morning", "confidence": "high"}
+  ],
+  "contact_roles": [
+    {"name": "Elena Ruiz", "role": "blocker", "quote": "I cannot approve anything this quarter", "confidence": "medium", "text": "Controls budget approval"}
+  ],
+  "sentiment": {"value": "at_risk", "quote": "Let me think about it and check with my team", "confidence": "medium"}
+}

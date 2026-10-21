@@ -1,0 +1,41 @@
+# Copy to ~/.hermes/skills/post-call-hubspot/config/settings.yaml (or set PCIX_CONFIG=/path/to/file).
+# Runtime files (work items, state.db) are created under ~/.hermes/skills/post-call-hubspot/data/.
+# Secrets are NOT stored here; set them as environment variables (see README):
+#   HUBSPOT_TOKEN, ZOOM_ACCOUNT_ID, ZOOM_CLIENT_ID, ZOOM_CLIENT_SECRET, ZOOM_WEBHOOK_SECRET_TOKEN (webhook only)
+
+# Your company's email domains. Attendees on these are treated as internal.
+internal_domains:
+  - yourcompany.com
+
+# Opt-in list of reps whose Zoom recordings may be processed (default-deny).
+reps:
+  - email: alex.rep@yourcompany.com
+  - email: sam.rep@yourcompany.com
+
+lookback_hours: 48          # how far back each cycle looks for recordings
+min_transcript_words: 150   # shorter transcripts are skipped
+
+write_as: meeting           # meeting (default) | note  (what gets created on the deal)
+max_note_sentences: 5       # hard cap enforced in code (1-5)
+
+create_tasks: true          # tasks for OUR next steps only
+max_tasks_per_call: 3
+
+deal_selection:
+  rule: latest_updated      # if a client has several deals, always use the most recently updated one
+  include_closed: true      # closed deals ARE eligible (decided). Set false to ignore them.
+
+# Local file retention (transcripts are the sensitive part)
+delete_transcript_after_commit: true   # transcript.txt deleted as soon as the call is finished
+retention_days: 7                      # finished work folders (context + extraction) deleted after 7 days
+state_retention_days: 90               # old rows in data/state.db deleted after 90 days
+
+review_task_prefix: "[Call Intel Review]"
+review_expiry_days: 14
+
+# Optional Zoom webhook receiver (run behind HTTPS). Cron polling works without it.
+webhook:
+  host: 127.0.0.1
+  port: 8787
+  path: /zoom/webhook
+  trigger_command: ""       # e.g. a command that runs this skill once; leave empty to rely on cron
