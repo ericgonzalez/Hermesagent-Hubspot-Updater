@@ -22,8 +22,6 @@
         "config/settings.example.yaml",
         "requirements.txt",
         "PRD.md",
-        "docs/post-call-hubspot-flow.png",
-        "docs/post-call-hubspot-overview.pdf",
         "examples/README.md",
         "examples/expected/acme_followup.json",
         "examples/expected/globex_stalled.json",
